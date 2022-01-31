@@ -75,6 +75,13 @@
             android:summary="@string/smart_pixels_summary"
             android:fragment="com.colt.settings.fragments.SmartPixels" />
 
+   <!-- Unlimited google photos storage -->
+   <SwitchPreference
+        android:key="use_photos_spoof"
+        android:title="@string/use_photos_spoof_title"
+        android:summary="@string/use_photos_spoof_summary"
+        android:defaultValue="true" />
+
     <!-- Device Part -->
         <Preference
             android:key="oneplus_shit"

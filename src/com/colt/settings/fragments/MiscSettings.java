@@ -49,12 +49,15 @@ public class MiscSettings extends SettingsPreferenceFragment implements
     private static final String NAVIGATION_BAR_RECENTS_STYLE = "navbar_recents_style";
 
     private static final String GAMING_MODE_ENABLED = "gaming_mode_enabled";
+    private static final String KEY_PHOTOS_SPOOF = "use_photos_spoof";
+    private static final String SYS_PHOTOS_SPOOF = "persist.sys.pixelprops.gphotos";
 
     private SystemSettingMasterSwitchPreference mGamingMode;
 
     private AppMultiSelectListPreference mAspectRatioAppsSelect;
     private ScrollAppsViewPreference mAspectRatioApps;
     private ListPreference mNavbarRecentsStyle;
+    private SwitchPreference mPhotosSpoof;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -118,6 +121,9 @@ public class MiscSettings extends SettingsPreferenceFragment implements
         mNavbarRecentsStyle.setSummary(mNavbarRecentsStyle.getEntry());
         mNavbarRecentsStyle.setOnPreferenceChangeListener(this);
 
+        mPhotosSpoof = (SwitchPreference) findPreference(KEY_PHOTOS_SPOOF);
+        mPhotosSpoof.setChecked(SystemProperties.getBoolean(SYS_PHOTOS_SPOOF, true));
+        mPhotosSpoof.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -153,8 +159,16 @@ public class MiscSettings extends SettingsPreferenceFragment implements
             mNavbarRecentsStyle.setSummary(mNavbarRecentsStyle.getEntries()[index]);
             Settings.System.putInt(getContentResolver(), Settings.System.OMNI_NAVIGATION_BAR_RECENTS, value);
             return true;
+        } else if (preference == mPhotosSpoof) {
+            boolean value = (Boolean) newValue;
+            SystemProperties.set(SYS_PHOTOS_SPOOF, value ? "true" : "false");
+            return true;
 	}
         return false;
+    }
+
+    public static void reset(Context mContext) {
+        SystemProperties.set(SYS_PHOTOS_SPOOF, "true");
     }
 
     private void checkForOmniSwitchRecents() {
