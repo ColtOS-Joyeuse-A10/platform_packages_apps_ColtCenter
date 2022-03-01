@@ -70,6 +70,7 @@
     <string name="gesture_summary">Gesture Customizations</string>
     <string name="notifications_summary">Notifications and Incall settings</string>
     <string name="misc_summary">Miscellaneous things to be checked here</string>
+    <string name="spoof_title">Spoofing</string>
 
     <!-- Device Feature -->
     <string name="device_part_title">OnePlus Love</string>
